@@ -1,28 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <m-header></m-header>
+    <tab></tab>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import MHeader from "@/components/m-header/m-header";
+import Tab from "@/components/tab/tab";
 export default {
-  name: 'app',
   components: {
-    HelloWorld
-  }
-}
+    MHeader,
+    Tab
+  },
+  created() {
+    console.log("组件app created");
+  },
+  mounted() {
+    console.log("组件app mounted");
+  },
+  beforeMount() {
+    console.log("组件app beforemountd");
+  },
+};
 </script>
 
-<style>
+<style scoped lang="stylus">
+@import './commons/stylus/variable';
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: $color-theme;
 }
 </style>
