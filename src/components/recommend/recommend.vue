@@ -12,7 +12,9 @@
 			</div>
 			<div class="recommend-list">
 				<h1 class="list-title">热门歌单推荐</h1>
-				<ul></ul>
+				<div class="item" v-for='item in discList' :key='item.id'>
+
+				</div>
 			</div>
 		</div>
 	</div>
@@ -20,16 +22,18 @@
 
 <script type="text/ecmascript-6">
 import Slider from "../../base/slider/slider";
-import { getRecommend } from "../../api/recommend";
+import { getRecommend , getDiscList } from "../../api/recommend";
 import { ERR_OK } from "../../api/config";
 export default {
   data() {
     return {
-      recommends: []
+			recommends: [],
+			discList:[]
     };
   },
   created() {
 		this._getRecommend();
+		this._getDiscList();
 		console.log("组件recommend created")
   },
   methods: {
@@ -39,7 +43,15 @@ export default {
 					this.recommends = res.data.slider;
 				}
       });
-    }
+		},
+		_getDiscList(){
+			getDiscList().then(res => {
+				if (res.status === 200){
+					this.discList = res.data.result
+					console.log(this.discList)
+				}
+			})
+		}
   },
   components: {
     Slider
@@ -73,47 +85,46 @@ export default {
 				line-height: 65px;
 				font-size: $font-size-medium;
 				color: $color-theme;
+			}
 
-				.item {
+			.item {
+				display: flex;
+				box-size: border-box;
+				align-items: center;
+				padding: 0 20px 20px 20px;
+
+				.icon {
+					flex: 0 0 60px;
+					width: 60px;
+					padding-right: 20px;
+				}
+
+				.text {
 					display: flex;
-					box-size: border-box;
-					align-items: center;
-					padding: 0 20px 20px 20px;
+					flex-direction: column;
+					justify-content: center;
+					flex: 1;
+					line-height: 20px;
+					overflow: hidden;
+					font-size: $font-size-medium;
 
-					.icon {
-						flex: 0 0 60px;
-						width: 60px;
-						padding-right: 20px;
+					.name {
+						margin-bottom: 10px;
+						color: $color-text;
 					}
 
-					.text {
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						flex: 1;
-						line-height: 20px;
-						overflow: hidden;
-						font-size: $font-size-medium;
-
-						.name {
-							margin-bottom: 10px;
-							color: $color-text;
-						}
-
-						.desc {
-							color: $color-text-d;
-						}
+					.desc {
+						color: $color-text-d;
 					}
 				}
 			}
 		}
 	}
-
-	.loading-container {
-		position: absolute;
-		width: 100%;
-		top: 50%;
-		transform: tranlateY(-50%);
-	}
+}
+.loading-container {
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	transform: tranlateY(-50%);
 }
 </style>

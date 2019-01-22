@@ -2,6 +2,8 @@ import jsonp from '../commons/js/jsonp'
 
 import {commonParams,options} from '../api/config.js'
 
+import Axios from 'axios'
+
 export function getRecommend(){
 	const url ='https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
 	const data = Object.assign({},commonParams,{
@@ -11,3 +13,8 @@ export function getRecommend(){
 	})
 	return jsonp(url,data,options)
 }
+
+export function getDiscList(){
+	return Axios.post('http://localhost:3000/personalized');
+}
+
