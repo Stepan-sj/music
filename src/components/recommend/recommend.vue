@@ -1,57 +1,61 @@
 <template>
-	<div class='recommend'>
-		<div class="recommend-content">
-			<div v-if='recommends.length' class="slider-wrapper">
-				<Slider>
-					<div v-for='item in recommends' :key='item.id'>
-						<a :href="item.linkUrl">
-							<img :src="item.picUrl" alt="">
-						</a>
-					</div>
-				</Slider>
-			</div>
-			<div class="recommend-list">
-				<h1 class="list-title">热门歌单推荐</h1>
-				<div class="item" v-for='item in discList' :key='item.id'>
-
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="recommend">
+    <div class="recommend-content">
+      <div v-if="recommends.length" class="slider-wrapper">
+        <Slider>
+          <div v-for="item in recommends" :key="item.id">
+            <a :href="item.linkUrl">
+              <img :src="item.picUrl" alt>
+            </a>
+          </div>
+        </Slider>
+      </div>
+      <h1 class="list-title">热门歌单推荐</h1>
+      <div class="recommend-list">
+        <div class="item" v-for="item in discList" :key="item.id">
+          <div class="playCount">{{(item.playCount/1000).toFixed(1)}}万</div>
+          <div class="icon">
+            <img :src="item.picUrl" alt>
+          </div>
+          <div class="text">{{item.name}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
 import Slider from "../../base/slider/slider";
-import { getRecommend , getDiscList } from "../../api/recommend";
+import { getRecommend, getDiscList } from "../../api/recommend";
 import { ERR_OK } from "../../api/config";
 export default {
   data() {
     return {
-			recommends: [],
-			discList:[]
+      recommends: [],
+      discList: []
     };
   },
   created() {
-		this._getRecommend();
-		this._getDiscList();
-		console.log("组件recommend created")
+    this._getRecommend();
+    this._getDiscList();
+    console.log("组件recommend created");
   },
   methods: {
     _getRecommend() {
       getRecommend().then(res => {
         if (res.code === ERR_OK) {
-					this.recommends = res.data.slider;
-				}
+          this.recommends = res.data.slider;
+        }
       });
-		},
-		_getDiscList(){
-			getDiscList().then(res => {
-				if (res.status === 200){
-					this.discList = res.data.result
-					console.log(this.discList)
-				}
-			})
-		}
+    },
+    _getDiscList() {
+      getDiscList().then(res => {
+        if (res.status === 200) {
+          this.discList = res.data.result;
+          console.log(this.discList);
+        }
+      });
+    }
   },
   components: {
     Slider
@@ -63,68 +67,68 @@ export default {
 @import '../../commons/stylus/variable';
 
 .recommend {
-	position: fixed;
-	width: 100%;
-	top: 88px;
-	bottom: 0;
+  position: fixed;
+  width: 100%;
+  top: 88px;
+  bottom: 0;
 
-	.recommend-content {
-		height: 100%;
-		overflow: hidden;
+  .recommend-content {
+    height: 100%;
+    overflow: hidden;
 
-		.slider-wrapper {
-			position: relative;
-			width: 100%;
-			overflow: hidden;
-		}
+    .slider-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
 
-		.recommend-list {
-			.list-title {
-				height: 65px;
-				text-align: center;
-				line-height: 65px;
-				font-size: $font-size-medium;
-				color: $color-theme;
-			}
+    .list-title {
+      height: 65px;
+      text-align: center;
+      line-height: 65px;
+      font-size: $font-size-medium;
+      color: $color-theme;
+    }
 
-			.item {
-				display: flex;
-				box-size: border-box;
-				align-items: center;
-				padding: 0 20px 20px 20px;
+    .recommend-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
 
-				.icon {
-					flex: 0 0 60px;
-					width: 60px;
-					padding-right: 20px;
-				}
+      .item {
+        width: 33%;
+        padding: 0 1%;
+        position: relative;
+        box-sizing: border-box;
 
-				.text {
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					flex: 1;
-					line-height: 20px;
-					overflow: hidden;
-					font-size: $font-size-medium;
+        .playCount {
+          position: absolute;
+          right: 10px;
+          font-size: $font-size-small;
+        }
 
-					.name {
-						margin-bottom: 10px;
-						color: $color-text;
-					}
+        .icon {
+          img {
+            width: 100%;
+            border-radius: 3px;
+          }
+        }
 
-					.desc {
-						color: $color-text-d;
-					}
-				}
-			}
-		}
-	}
+        .text {
+          margin-top: 5px;
+          font-size: $font-size-small;
+          height: 40px;
+          line-height: 16px;
+        }
+      }
+    }
+  }
 }
+
 .loading-container {
-	position: absolute;
-	width: 100%;
-	top: 50%;
-	transform: tranlateY(-50%);
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: tranlateY(-50%);
 }
 </style>
