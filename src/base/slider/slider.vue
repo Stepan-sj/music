@@ -28,6 +28,7 @@ export default {
     this._setSliderWidth();
     this._initDots();
     this._initSliderWidth();
+    this._play();
   },
   methods: {
     _setSliderWidth() {

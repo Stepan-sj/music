@@ -15,6 +15,6 @@ export function getRecommend(){
 }
 
 export function getDiscList(){
-	return Axios.post('http://localhost:3000/personalized');
+	return Axios.post('http://192.168.0.103:3000/personalized');
 }
 
