@@ -31,6 +31,10 @@ export default {
     refreshDelay: {
       type: Number,
       default: 20
+    },
+    listenScroll:{
+      type:Boolean,
+      default:false
     }
   },
   mounted() { 
@@ -45,6 +49,12 @@ export default {
         probeType: this.probeType,
         click: this.click
       });
+      if(this.listenScroll){
+        let me=this
+        this.scroll.on('scroll',(pos) => {
+          me.$emit('scroll',pos)
+        })
+      }
     },
     enable() {
       this.scroll && this.scroll.enable();
@@ -54,10 +64,17 @@ export default {
     },
     refresh() {
       this.scroll && this.scroll.refresh();
+    },
+    scrollTo(){
+      this.scroll && this.scroll.scrollTo.apply(this.scroll,arguments)
+    },
+    scrollToElement(arg){
+      this.scroll && this.scroll.scrollToElement(arg)
     }
   },
   watch: {
     data() {
+      console.log(this.data)
       setTimeout(() => {
         this.refresh();
       }, 20);

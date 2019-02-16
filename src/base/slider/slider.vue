@@ -17,6 +17,16 @@ export default {
   created() {
     console.log(1);
   },
+  props:{
+    data:{
+      type:String
+    }
+  },
+  watch:{
+    data(){
+      console.log('watch')
+    }
+  },
   data() {
     return {
       dots: [],

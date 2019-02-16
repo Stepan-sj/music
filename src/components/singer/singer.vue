@@ -1,6 +1,7 @@
 <template>
   <div class="singer">
-    <list-view :data="list" v-if="list.length !=0"></list-view>
+    <list-view :data="list" @select='selectSinger'></list-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -20,6 +21,12 @@ export default {
     };
   },
   methods: {
+    selectSinger(singer){
+      console.log(singer)
+      this.$router.push({
+        path:`/singer/${singer.id}`
+      })
+    },
     _getSingerList() {
       getSingerList().then(res => {
         let s = res.data.artists;
