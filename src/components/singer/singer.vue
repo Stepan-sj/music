@@ -8,6 +8,7 @@
 <script>
 import { getSingerList } from "../../api/singer";
 import listView from "../../base/listview/listview";
+import {mapMutations} from 'vuex'
 
 var pinyin = require("pinyin");
 
@@ -22,10 +23,10 @@ export default {
   },
   methods: {
     selectSinger(singer){
-      console.log(singer)
       this.$router.push({
         path:`/singer/${singer.id}`
       })
+      this.setSinger(singer)
     },
     _getSingerList() {
       getSingerList().then(res => {
@@ -85,7 +86,10 @@ export default {
         return a.title.charCodeAt(0)-b.title.charCodeAt(0)
       })
       return hot.concat(other)
-    }
+    },
+    ...mapMutations({
+      setSinger:"SET_SINGER"
+    })
   },
   components:{
     listView
