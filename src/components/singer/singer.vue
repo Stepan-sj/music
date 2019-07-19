@@ -21,6 +21,9 @@ export default {
       list:[]
     };
   },
+  mounted(){
+    console.log('父路由')
+  },
   methods: {
     selectSinger(singer){
       this.$router.push({

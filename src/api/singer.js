@@ -10,5 +10,5 @@ export function getSingerDetail(id){
 }
 
 export function getSong(musicId){
-    return Axios.post(`http://192.168.0.103:3000/song/url?id=${id}`);
+    return Axios.post(`http://192.168.0.103:3000/song/url?id=${musicId}`);
 }

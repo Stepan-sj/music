@@ -37,6 +37,9 @@ export default {
       default:false
     }
   },
+  created(){
+    
+  },
   mounted() { 
     this._initScroll();
   },
